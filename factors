@@ -1,19 +1,10 @@
-#!/usr/bin/python3
-import sys
+#!/usr/bin/env bash
+# Read number from file and print his factors in file
 
-if len(sys.argv) != 2:
-    print("Bad Usage\n/.factors filename")
-else:
+FILE=$1
 
-    file_name = sys.argv[1]
-    file_of_number = open(file_name)
-    number = file_of_number.readline()
-
-    while number != "\n" and number != "":
-        number = int(number)
-        divisor = 2
-        while number % divisor != 0:
-            divisor += 1
-        d_r = int(number / divisor)
-        print(f"{number}={d_r}*{divisor}")
-        number = file_of_number.readline()
+while read NUM
+do
+    factors=($(factor $NUM))
+    echo "$NUM=$(($NUM/${factors[1]}))*${factors[1]}"
+done < $FILE
